@@ -3,7 +3,7 @@ class WebhooksController < ApplicationController
 
   def create
     text = params[:text]
-    report = BartApi::Station.new(:mont).destination(text.to_sym).report
-    render json: { text: report }
+
+    render json: { text: TrainReporter.report(text) }
   end
 end

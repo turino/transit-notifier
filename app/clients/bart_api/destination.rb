@@ -1,13 +1,13 @@
 module BartApi
   class Destination
-    MACARTHUR_DESTINATIONS = %w[RICH PITT].freeze
+    MACARTHUR_DESTINATIONS = %i[pitt rich].freeze
 
     def initialize(json)
       @json = json
     end
 
     def departure_times
-      departing_trains.map { |info| "#{info.first} (#{info.second} min delay)" }
+      departing_trains.map(&:first)
     end
 
     def departing_trains
@@ -17,6 +17,10 @@ module BartApi
     end
 
     def destination
+      json["abbreviation"].downcase.to_sym
+    end
+
+    def destination_name
       json["destination"]
     end
 
@@ -28,16 +32,12 @@ module BartApi
       estimates.first.direction
     end
 
-    def abbreviation
-      json["abbreviation"].downcase.to_sym
-    end
-
     def estimates
       json["estimate"].map { |train| Train.new(train) }
     end
 
     def report
-      "%s: %s" % [destination, departure_times.join(", ")]
+      "%s: %s" % [destination_name, departure_times.join(", ")]
     end
 
     private
