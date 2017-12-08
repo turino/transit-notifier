@@ -38,7 +38,11 @@ class TrainReporter
   private
 
   def text
-    BartApi::Station.new(:mont).where(*params).send(report_name)
+    if report_name
+      BartApi::Station.new(:mont).where(*params).send(report_name)
+    elsif command == :alert
+      BartApi::Alert.report
+    end
   end
 
   def report_name

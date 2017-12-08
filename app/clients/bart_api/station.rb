@@ -1,6 +1,6 @@
 module BartApi
   class Station < Base
-    PATH = "etd.aspx?cmd=etd&orig=%s&json=y".freeze
+    PATH = "etd.aspx?cmd=etd&orig=%s".freeze
 
     def initialize(name, trains = nil)
       @name = name
