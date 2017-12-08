@@ -6,6 +6,10 @@ module BartApi
       @json = json
     end
 
+    def delays
+      departing_trains.map(&:second)
+    end
+
     def departure_times
       departing_trains.map(&:first)
     end
@@ -36,7 +40,11 @@ module BartApi
       json["estimate"].map { |train| Train.new(train) }
     end
 
-    def report
+    def report_delays
+      "%s: %s" % [destination_name, delays.join(", ")]
+    end
+
+    def report_departures
       "%s: %s" % [destination_name, departure_times.join(", ")]
     end
 

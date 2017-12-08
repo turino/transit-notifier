@@ -19,8 +19,12 @@ module BartApi
       find_by(:abbreviation, abbr)
     end
 
-    def report
-      trains.map(&:report).join("\n")
+    def report_delays
+      trains.map(&:report_delays).join("\n")
+    end
+
+    def report_departures
+      trains.map(&:report_departures).join("\n")
     end
 
     def departure_times
