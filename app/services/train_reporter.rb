@@ -2,6 +2,8 @@ class TrainReporter
   PARAMS = {
     north: %i[direction north],
     south: %i[direction south],
+    red: %i[line red],
+    yellow: %i[line yellow],
     macarthur: [:destination, BartApi::Destination::MACARTHUR_DESTINATIONS],
   }.freeze
 
