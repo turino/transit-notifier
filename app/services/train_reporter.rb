@@ -4,6 +4,8 @@ class TrainReporter
     south: %i[direction south],
     red: %i[line red],
     yellow: %i[line yellow],
+    blue: %i[line blue],
+    green: %i[line green],
     macarthur: [:destination, BartApi::Destination::MACARTHUR_DESTINATIONS],
   }.freeze
 
@@ -12,6 +14,10 @@ class TrainReporter
     delay: :report_delays,
   }.freeze
 
+  def self.departures(params)
+    new(params).departures
+  end
+
   def self.report(params)
     new(params).report
   end
@@ -19,6 +25,10 @@ class TrainReporter
   def initialize(params)
     keywords = params.split(" ").map(&:to_sym)
     @command, @keywords = keywords
+  end
+
+  def departures
+    BartApi::Station.new(:mont).where(*params).departure_times
   end
 
   def report
