@@ -1,0 +1,7 @@
+#comments #in #this #file #must #have ## #before #every #word
+#
+#Add #apt-based #dependecies #to #Heroku
+#requires #buildpack #https://github.com/ivandeex/heroku-buildpack-apt
+
+sqlite3
+libsqlite3-dev
