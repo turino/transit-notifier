@@ -7,17 +7,11 @@ module BartApi
     end
 
     def delays
-      departing_trains.map(&:second)
+      estimates.map(&:delay_in_minutes)
     end
 
     def departure_times
-      departing_trains.map(&:first)
-    end
-
-    def departing_trains
-      estimates.map do |est|
-        [est.etd, est.delay, est.line, est.direction]
-      end.sort
+      estimates.map(&:etd_with_delay)
     end
 
     def destination
@@ -28,16 +22,12 @@ module BartApi
       json["destination"]
     end
 
-    def line
-      estimates.first.line
-    end
-
     def direction
       estimates.first.direction
     end
 
     def estimates
-      json["estimate"].map { |train| Train.new(train) }
+      json["estimate"].map { |train| Train.new(train) }.sort_by(&:etd)
     end
 
     def report_delays
